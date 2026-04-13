@@ -21,6 +21,7 @@ function isStringOrUndefined(v) {
 function parseId(req, res) {
   const id = Number(req.params.id);
   if (!Number.isInteger(id) || id <= 0) {
+    logger.warn({ id: req.params.id }, "Invalid note id");
     res.status(400).json({ error: "Invalid id. Expected a positive integer." });
     return null;
   }
@@ -91,6 +92,7 @@ export function createApp({ pool }) {
     logger.info({ title }, "Creating note");
 
     if (!isNonEmptyString(title)) {
+      logger.warn({ title }, "Missing or invalid note title");
       return res.status(400).json({
         error: "title is required",
       });
@@ -116,12 +118,14 @@ export function createApp({ pool }) {
     logger.info({ id }, "Updating note");
 
     if (!isNonEmptyString(title)) {
+      logger.warn({ id, title }, "Missing or invalid note title");
       return res.status(400).json({
         error: "title is required and must be a non-empty string",
       });
     }
 
     if (!isStringOrUndefined(content)) {
+      logger.warn({ id, contentType: typeof content }, "Invalid note content");
       return res.status(400).json({
         error: "content must be a string if provided",
       });
@@ -139,6 +143,7 @@ export function createApp({ pool }) {
     );
 
     if (result.rows.length === 0) {
+      logger.warn({ id }, "Note not found");
       return res.status(404).json({ error: "note not found" });
     }
 
@@ -156,6 +161,7 @@ export function createApp({ pool }) {
     const result = await pool.query("SELECT * FROM notes WHERE id = $1", [id]);
 
     if (result.rows.length === 0) {
+      logger.warn({ id }, "Note not found");
       return res.status(404).json({ error: "note not found" });
     }
 
@@ -174,6 +180,7 @@ export function createApp({ pool }) {
     );
 
     if (result.rows.length === 0) {
+      logger.warn({ id }, "Note not found");
       return res.status(404).json({ error: "note not found" });
     }
 
@@ -187,7 +194,13 @@ export function createApp({ pool }) {
   // =======================
 
   app.use((req, res) => {
+    logger.warn({ method: req.method, path: req.path }, "Endpoint not found");
     res.status(404).json({ error: "Endpoint not found" });
+  });
+
+  app.use((err, req, res, _next) => {
+    logger.error({ err, method: req.method, path: req.path }, "Unhandled error");
+    res.status(500).json({ error: "Internal server error" });
   });
 
   return app;
