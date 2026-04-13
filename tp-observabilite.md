@@ -104,3 +104,5 @@ Vous devez démontrer :
 
 > À quoi sert `/health/db` comparé à `/health` ? 
 
+/health est un endpoint de vérification de l'état général du service, tandis que /health/db est spécifiquement conçu pour vérifier la connectivité et la disponibilité de la base de données. /health peut indiquer que le service est actif, mais si /health/db retourne une erreur, cela signifie que le service ne peut pas accéder à sa base de données, ce qui peut affecter son fonctionnement global.
+
