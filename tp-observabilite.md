@@ -75,6 +75,8 @@ Après plusieurs appels à l’API, l’endpoint `/metrics` doit faire apparaît
 
 > Quelle différence entre `Counter` et `Histogram` ?
 
+Un `Counter` est une métrique qui ne peut que croître, elle est utilisée pour compter des événements ou des occurrences. Par exemple, le nombre total de requêtes HTTP reçues. Un `Histogram`, en revanche, est utilisé pour mesurer la distribution d'une valeur, comme les temps de réponse. Il permet de calculer des statistiques telles que la moyenne, les percentiles, etc., ce qui est utile pour analyser les performances d'une application.
+
 ## Partie 3 — Health check /health (simple puis DB-ready)
 
 Permettre à une application de signaler son état à un système externe (load balancer, orchestrateur, etc.).
