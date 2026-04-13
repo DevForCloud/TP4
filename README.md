@@ -139,7 +139,9 @@ docker compose start db
 
 A quoi ressemble un log issu de `console.log` ?
 
-Un log issu de `console.log` est du texte  brut, par exemple pour la requete qui recupere les notes, on a: ```
+Un log issu de `console.log` est du texte  brut, par exemple pour la requete qui recupere les notes, on a: 
+
+```
 Fetching all notes
 ```
 
