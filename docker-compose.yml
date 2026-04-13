@@ -7,7 +7,7 @@ services:
       - .env
 
   db:
-    image: postgres:15
+    image: postgres:alpine
     env_file:
       - .env
     volumes:

@@ -24,9 +24,21 @@ Tester en changeant `LOG_LEVEL=warn` dans l’environnement.
 ### Question théorique
 
 > À quoi ressemble un log issu de `console.log` ?
+
+Fetching all notes
+
 > À quoi ressemble un log issu de `logger` ?
+info
+{"level":30,"time":1776065981309,"pid":19,"hostname":"c4cb5e6b9ddc","msg":"Fetching all notes"}
+
+
 > Quelles sont les différences entre les deux ?
+
+Les logs de `console.log` sont du texte brut, tandis que les logs de `logger` sont des objets JSON structurés. Les logs de `logger` contiennent des métadonnées supplémentaires telles que le niveau de log, l'heure, le PID et le nom d'hôte, ce qui les rend plus exploitables pour l'analyse et la surveillance.
+
 > Pourquoi ne peut-on pas stocker ces logs dans un fichier de log sur le cloud ?
+
+Parce que les fichiers de log sur le cloud peuvent être difficiles à gérer et à analyser, surtout à grande échelle. Les logs structurés en JSON peuvent être facilement ingérés par des systèmes de gestion de logs et d'analyse, tandis que les logs en texte brut nécessitent souvent une transformation supplémentaire pour être exploitables. De plus, les fichiers de log peuvent devenir volumineux et difficiles à stocker et à consulter efficacement sur le cloud.
 
 ## Partie 2 — Metrics Prometheus dans une API Node.js
 
